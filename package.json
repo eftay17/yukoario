@@ -1,13 +1,14 @@
 {
-  "name": "ar-io-game-project",
+  "name": "catch-the-ball-game",
   "version": "1.0.0",
-  "description": "HerculesNode Game Ario",
+  "description": "Basit bir JavaScript oyunu: Catch the Ball",
   "main": "index.html",
   "scripts": {
-    "build": "mkdir dist && cp index.html dist/",
-    "start": "http-server ."
+    "start": "live-server"
   },
   "dependencies": {
-    "http-server": "^14.1.0"
-  }
+    "live-server": "^1.2.2"
+  },
+  "author": "Kullanıcı",
+  "license": "MIT"
 }
