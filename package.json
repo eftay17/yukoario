@@ -1,0 +1,13 @@
+{
+  "name": "ar-io-game-project",
+  "version": "1.0.0",
+  "description": "HerculesNode Game Ario",
+  "main": "index.html",
+  "scripts": {
+    "build": "mkdir dist && cp index.html dist/",
+    "start": "http-server ."
+  },
+  "dependencies": {
+    "http-server": "^14.1.0"
+  }
+}

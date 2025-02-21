@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ario Ball Game - HerculesNode</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+    canvas {
+      background-color: #fff;
+      border: 2px solid #333;
+      margin-top: 20px;
+    }
+    #score {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ario Ball Game - HerculesNode</h1>
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+  <div id="score">Score: 0</div>
+  
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const ballImage = new Image();
+    ballImage.src = "arr.png"; // arr.png ile aynı dizinde olmalı
+
+    let score = 0;
+
+    const paddle = {
+      width: 80,
+      height: 10,
+      x: canvas.width / 2 - 40,
+      y: canvas.height - 30,
+      speed: 8,
+    };
+
+    const ball = {
+      x: Math.random() * (canvas.width - 40) + 20,
+      y: 0,
+      radius: 20, // Görselin daha net görünmesi için büyüttüm
+      speed: 4,
+    };
+
+    document.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      paddle.x = e.clientX - rect.left - paddle.width / 2;
+    });
+
+    function drawPaddle() {
+      ctx.fillStyle = "#333";
+      ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+    }
+
+    function drawBall() {
+      ctx.drawImage(
+        ballImage,
+        ball.x - ball.radius,
+        ball.y - ball.radius,
+        ball.radius * 2,
+        ball.radius * 2
+      );
+    }
+
+    function update() {
+      ball.y += ball.speed;
+
+      if (
+        ball.y + ball.radius >= paddle.y &&
+        ball.x >= paddle.x &&
+        ball.x <= paddle.x + paddle.width
+      ) {
+        score++;
+        ball.y = 0;
+        ball.x = Math.random() * (canvas.width - 40) + 20;
+        document.getElementById("score").innerText = `Score: ${score}`;
+      }
+
+      if (ball.y - ball.radius > canvas.height) {
+        alert(`Game Over! Final Score: ${score}`);
+        document.location.reload();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawPaddle();
+      if (ballImage.complete) {
+        drawBall();
+      }
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+    ballImage.onload = gameLoop; // Görsel yüklendikten sonra oyunu başlat
+  </script>
+</body>
+</html>
