@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HerculesNode ario Game</title>
+  <title>Ario Ball Game - HerculesNode</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -23,13 +23,16 @@
   </style>
 </head>
 <body>
-  <h1>HerculesNode ario Game!</h1>
+  <h1>Ario Ball Game - HerculesNode</h1>
   <canvas id="gameCanvas" width="400" height="600"></canvas>
   <div id="score">Score: 0</div>
   
   <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
+
+    const ballImage = new Image();
+    ballImage.src = "arr.png"; // arr.png ile aynı dizinde olmalı
 
     let score = 0;
 
@@ -42,9 +45,9 @@
     };
 
     const ball = {
-      x: Math.random() * (canvas.width - 20) + 10,
+      x: Math.random() * (canvas.width - 40) + 20,
       y: 0,
-      radius: 10,
+      radius: 20, // Görselin daha net görünmesi için büyüttüm
       speed: 4,
     };
 
@@ -59,11 +62,13 @@
     }
 
     function drawBall() {
-      ctx.beginPath();
-      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#ff6347";
-      ctx.fill();
-      ctx.closePath();
+      ctx.drawImage(
+        ballImage,
+        ball.x - ball.radius,
+        ball.y - ball.radius,
+        ball.radius * 2,
+        ball.radius * 2
+      );
     }
 
     function update() {
@@ -76,12 +81,12 @@
       ) {
         score++;
         ball.y = 0;
-        ball.x = Math.random() * (canvas.width - 20) + 10;
-        document.getElementById("score").innerText = Score: ${score};
+        ball.x = Math.random() * (canvas.width - 40) + 20;
+        document.getElementById("score").innerText = `Score: ${score}`;
       }
 
       if (ball.y - ball.radius > canvas.height) {
-        alert(Game Over! Final Score: ${score});
+        alert(`Game Over! Final Score: ${score}`);
         document.location.reload();
       }
     }
@@ -89,7 +94,9 @@
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawPaddle();
-      drawBall();
+      if (ballImage.complete) {
+        drawBall();
+      }
     }
 
     function gameLoop() {
@@ -98,7 +105,7 @@
       requestAnimationFrame(gameLoop);
     }
 
-    gameLoop();
+    ballImage.onload = gameLoop; // Görsel yüklendikten sonra oyunu başlat
   </script>
 </body>
 </html>
