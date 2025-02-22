@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "build": "mkdir dist && cp index.html dist/",
-    "start": "http-server ."
+    "start": "http-server dist"
   },
   "dependencies": {
     "http-server": "^14.1.0"
