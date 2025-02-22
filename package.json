@@ -4,7 +4,7 @@
   "description": "HerculesNode Game Ario",
   "main": "index.html",
   "scripts": {
-  "build": "mkdir -p dist && cp index.html arr.png dist/"
+  "build": "mkdir -p dist && cp index.html arr.png dist/",
     "start": "http-server dist"
   },
   "dependencies": {
